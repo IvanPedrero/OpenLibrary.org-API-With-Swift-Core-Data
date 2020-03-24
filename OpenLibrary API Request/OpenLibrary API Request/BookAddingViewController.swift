@@ -99,7 +99,7 @@ class BookAddingViewController: UIViewController {
     
     
     /**
-            This function will process the Data object into a JSON object for management into dictionaries and strings,
+            This function will process the Data object into a JSON object for management into dictionaries and strings.
      */
     func processRequestData(dataString:Data, isbnText:String){
         // Process the Data as JSON.

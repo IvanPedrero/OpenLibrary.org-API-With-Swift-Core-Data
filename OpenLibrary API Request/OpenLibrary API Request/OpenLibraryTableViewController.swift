@@ -139,6 +139,8 @@ class OpenLibraryTableViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
+        
+        // Go to book detail screen.
         if segue.identifier == "detailSegue" {
             // Assign the controller destination.
             let cc = segue.destination as! BookDetailViewController
@@ -151,6 +153,7 @@ class OpenLibraryTableViewController: UITableViewController {
             cc.bookAuthors = self.books[indexPath!.row].authors
             cc.bookImage = self.books[indexPath!.row].image
         }
+        // Go to add book screen.
         else if segue.identifier == "addSegue" {
             // Assign the controller destination.
             let cc = segue.destination as! BookAddingViewController
@@ -162,6 +165,10 @@ class OpenLibraryTableViewController: UITableViewController {
     
     // MARK: - Book Adding and Core Data Managing
 
+    
+    /**
+           This function will add the book to the data model and the table data.
+    */
     public func addBook(book:Books){
         let b = Books(name: book.name, authors: book.authors, image: book.image)
         self.books.append(b)
@@ -169,6 +176,10 @@ class OpenLibraryTableViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
+    
+    /**
+           This function will save the book in the Core Data model given a Book.
+    */
     private func saveBookToModel(book:Books){
         // Core Data: Create the ctx section.
         let entitySection = NSEntityDescription.entity(forEntityName: "Book", in: self.ctx!)
@@ -206,6 +217,10 @@ class OpenLibraryTableViewController: UITableViewController {
             
     }
     
+    
+    /**
+           This function will delete a given Book from the persistent data model.
+    */
     private func deleteBookFromModel(book:Books){
         // Core Data: Create the ctx section.
         let entitySection = NSEntityDescription.entity(forEntityName: "Book", in: self.ctx!)
@@ -240,6 +255,10 @@ class OpenLibraryTableViewController: UITableViewController {
         }
     }
     
+    
+    /**
+           This function will load the data saved to Core Data and set it in the table view on load.
+    */
     private func loadBookData(){
         // Core Data: Load the data!
         let bookEntity = NSEntityDescription.entity(forEntityName: "Book", in: self.ctx!)
