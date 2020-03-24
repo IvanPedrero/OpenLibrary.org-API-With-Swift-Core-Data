@@ -7,7 +7,8 @@
 //
 
 import UIKit
- 
+import CoreData
+
 
 class OpenLibraryTableViewController: UITableViewController {
     
@@ -27,12 +28,23 @@ class OpenLibraryTableViewController: UITableViewController {
     // Data source for the table view.
     private var books = [Books]()
     
+    // Create context for Core Data management.
+    public var ctx:NSManagedObjectContext? = nil
+    
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        self.title = "Open Library Books"
+        // Add title
+        self.title = "Open Library API"
+        
+        // Core Data: Create the context.
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        self.ctx = delegate.persistentContainer.viewContext
+        
+        // Load the data:
+        loadBookData()
         
         /*
          FOR TESTING:
@@ -134,11 +146,78 @@ class OpenLibraryTableViewController: UITableViewController {
         }
     }
     
-    // MARK: - Book Adding
+    // MARK: - Book Adding and Core Data Managing
 
     public func addBook(book:Books){
-        self.books.append(Books(name: book.name, authors: book.authors, image: book.image))
+        let b = Books(name: book.name, authors: book.authors, image: book.image)
+        self.books.append(b)
+        self.saveBookToModel(book: b)
         self.tableView.reloadData()
+    }
+    
+    private func saveBookToModel(book:Books){
+        // Core Data: Create the ctx section.
+        let entitySection = NSEntityDescription.entity(forEntityName: "Book", in: self.ctx!)
+        
+        let petition = entitySection?.managedObjectModel.fetchRequestFromTemplate(withName: "FetchBook", substitutionVariables: ["name":book.name])
+        
+        // Check if the book is not already saved.
+        do{
+            let entity = try self.ctx?.fetch(petition!)
+            // Found entities matching!
+            if(entity!.count > 0){
+                print("Already saved this book into the data.")
+                return
+            }
+        }
+        catch{
+            print("ERROR: Core Data model error. Could not create entity.")
+        }
+        
+        // Core Data: Save the data into the database.
+        let newBook = NSEntityDescription.insertNewObject(forEntityName: "Book", into: self.ctx!)
+        
+        // Core Data: Add the values.
+        newBook.setValue(book.name, forKey: "name")
+        newBook.setValue(book.authors, forKey: "authors")
+        newBook.setValue(book.image, forKey: "image")
+        
+        // Core Data: Save the context!
+        do{
+            try self.ctx?.save()
+        }
+        catch{
+            print("ERROR: Core Data model error. Could not save entity.")
+        }
+            
+    }
+    
+    private func loadBookData(){
+        // Core Data: Load the data!
+        let bookEntity = NSEntityDescription.entity(forEntityName: "Book", in: self.ctx!)
+        
+        let petition = bookEntity?.managedObjectModel.fetchRequestFromTemplate(withName: "FetchBooks", substitutionVariables: [:])
+        do{
+            // Get book information.
+            let books = try self.ctx?.fetch(petition!)
+            for b in books! {
+                // Get the data from the current book.
+                let dataName = (b as AnyObject).value(forKey: "name") as! String
+                let dataAuthors = (b as AnyObject).value(forKey: "authors") as! [String]
+                let dataImage = (b as AnyObject).value(forKey: "image") as! String
+                
+                // Add the book to the table data.
+                self.books.append(Books(name: dataName, authors: dataAuthors, image: dataImage))
+                
+                print("Loaded book: ", dataName)
+            }
+            // Reload the table.
+            self.tableView.reloadData()
+            
+        }
+        catch{
+            print("ERROR: Core Data model error. Could not load entity data.")
+        }
     }
 
 }

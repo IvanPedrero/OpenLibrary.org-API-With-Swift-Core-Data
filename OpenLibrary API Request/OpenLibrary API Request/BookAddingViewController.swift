@@ -16,6 +16,7 @@ class BookAddingViewController: UIViewController {
     // Book to add.
     var bookToAdd = OpenLibraryTableViewController.Books.init(name: "", authors: [], image: "")
     
+    
     // Storyboard variables.
     @IBOutlet weak var isbnTextField: UITextField!
     @IBOutlet weak var bookTitleLabel: UILabel!
@@ -76,8 +77,12 @@ class BookAddingViewController: UIViewController {
         // Add to the URL the ISBN given as text.
         let urlForRequest = "https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:" + isbnText
                 
-        // Create an URL.
-        let url = URL(string: urlForRequest)!
+        // Create an URL, guarding it against invalid URLS.
+        guard let url = URL(string: urlForRequest)
+            else{
+                showAlert(alertMessage: "Invalid URL.")
+                return
+            }
         
         // Create the task.
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in

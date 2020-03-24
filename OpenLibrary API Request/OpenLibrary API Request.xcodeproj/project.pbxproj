@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		824D3B91242A6F0900B76F55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824D3B90242A6F0900B76F55 /* AppDelegate.swift */; };
 		824D3B93242A6F0900B76F55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824D3B92242A6F0900B76F55 /* SceneDelegate.swift */; };
-		824D3B95242A6F0900B76F55 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824D3B94242A6F0900B76F55 /* ViewController.swift */; };
 		824D3B98242A6F0900B76F55 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 824D3B96242A6F0900B76F55 /* Main.storyboard */; };
 		824D3B9B242A6F0900B76F55 /* OpenLibrary_API_Request.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 824D3B99242A6F0900B76F55 /* OpenLibrary_API_Request.xcdatamodeld */; };
 		824D3B9D242A6F0B00B76F55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 824D3B9C242A6F0B00B76F55 /* Assets.xcassets */; };
@@ -24,7 +23,6 @@
 		824D3B8D242A6F0900B76F55 /* OpenLibrary API Request.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OpenLibrary API Request.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		824D3B90242A6F0900B76F55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		824D3B92242A6F0900B76F55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		824D3B94242A6F0900B76F55 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		824D3B97242A6F0900B76F55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		824D3B9A242A6F0900B76F55 /* OpenLibrary_API_Request.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibrary_API_Request.xcdatamodel; sourceTree = "<group>"; };
 		824D3B9C242A6F0B00B76F55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 			children = (
 				824D3B90242A6F0900B76F55 /* AppDelegate.swift */,
 				824D3B92242A6F0900B76F55 /* SceneDelegate.swift */,
-				824D3B94242A6F0900B76F55 /* ViewController.swift */,
 				824D3BA7242A703300B76F55 /* OpenLibraryTableViewController.swift */,
 				824D3BA9242A707100B76F55 /* BookDetailViewController.swift */,
 				824D3BAB242A709300B76F55 /* BookAddingViewController.swift */,
@@ -156,7 +153,6 @@
 				824D3BA8242A703300B76F55 /* OpenLibraryTableViewController.swift in Sources */,
 				824D3B9B242A6F0900B76F55 /* OpenLibrary_API_Request.xcdatamodeld in Sources */,
 				824D3BAA242A707100B76F55 /* BookDetailViewController.swift in Sources */,
-				824D3B95242A6F0900B76F55 /* ViewController.swift in Sources */,
 				824D3BAC242A709300B76F55 /* BookAddingViewController.swift in Sources */,
 				824D3B91242A6F0900B76F55 /* AppDelegate.swift in Sources */,
 				824D3BAE242A70AB00B76F55 /* Reachability.swift in Sources */,
