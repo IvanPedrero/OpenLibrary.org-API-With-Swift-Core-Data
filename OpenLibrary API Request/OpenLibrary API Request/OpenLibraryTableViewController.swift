@@ -85,25 +85,39 @@ class OpenLibraryTableViewController: UITableViewController {
     }
     
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+    
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            
+            /*
+             Important: Delete the element first from your data source
+                        and then delete the row, otherwise an runtime
+                        error will occur.
+             */
+            
+            // Delete the book from the Core Data model.
+            self.deleteBookFromModel(book: self.books[indexPath.row])
+            
+            // Delete book from the data source.
+            self.books.remove(at: indexPath.row)
+            
+            // Delete the row.
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
@@ -190,6 +204,40 @@ class OpenLibraryTableViewController: UITableViewController {
             print("ERROR: Core Data model error. Could not save entity.")
         }
             
+    }
+    
+    private func deleteBookFromModel(book:Books){
+        // Core Data: Create the ctx section.
+        let entitySection = NSEntityDescription.entity(forEntityName: "Book", in: self.ctx!)
+        
+        let petition = entitySection?.managedObjectModel.fetchRequestFromTemplate(withName: "FetchBook", substitutionVariables: ["name":book.name])
+        
+        // Delete the object in the data model.
+        do{
+            // Fetch the petiton.
+            if let result = try self.ctx?.fetch(petition!) {
+                // Traverse the model.
+                for entity in result {
+                    
+                    // Delete from database.
+                    ctx?.delete(entity as! NSManagedObject)
+                    
+                    //Show message.
+                    print("Deleted book: ", (entity as AnyObject).value(forKey: "name") as! String)
+                }
+            }
+            
+            // Save the context.
+            do{
+                try self.ctx?.save()
+            }
+            catch{
+                print("ERROR: Core Data model error. Could not save context at deletion.")
+            }
+        }
+        catch{
+            print("ERROR: Core Data model error. Could not delete entity.")
+        }
     }
     
     private func loadBookData(){
