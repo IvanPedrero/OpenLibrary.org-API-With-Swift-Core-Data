@@ -8,10 +8,15 @@
 
 import UIKit
 
+protocol AddProtocolDelegate{
+    func addBookToTable(book:OpenLibraryTableViewController.Books)
+}
+
 class BookAddingViewController: UIViewController {
     
     // Segue functions.
-    var controllerReference = OpenLibraryTableViewController()
+    var addProtocolDelegate:AddProtocolDelegate!
+    
     
     // Book to add.
     var bookToAdd = OpenLibraryTableViewController.Books.init(name: "", authors: [], image: "")
@@ -59,7 +64,8 @@ class BookAddingViewController: UIViewController {
     
     @IBAction func addBookAction(_ sender: Any) {
         if(bookToAdd.name != "" || bookToAdd.name != "No title available"){
-            controllerReference.addBook(book: bookToAdd)
+            // Use the protocol to send the information.
+            addProtocolDelegate.addBookToTable(book: bookToAdd)
             print("Added book: " + bookToAdd.name)
             navigationController?.popToRootViewController(animated: true)
         }

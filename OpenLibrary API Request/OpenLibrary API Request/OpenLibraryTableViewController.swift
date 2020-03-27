@@ -158,24 +158,13 @@ class OpenLibraryTableViewController: UITableViewController {
             // Assign the controller destination.
             let cc = segue.destination as! BookAddingViewController
             
-            // Assign the object reference.
-            cc.controllerReference = self
+            // Assign the delegate reference.
+            cc.addProtocolDelegate = self
         }
     }
     
     // MARK: - Book Adding and Core Data Managing
 
-    
-    /**
-           This function will add the book to the data model and the table data.
-    */
-    public func addBook(book:Books){
-        let b = Books(name: book.name, authors: book.authors, image: book.image)
-        self.books.append(b)
-        self.saveBookToModel(book: b)
-        self.tableView.reloadData()
-    }
-    
     
     /**
            This function will save the book in the Core Data model given a Book.
@@ -216,8 +205,7 @@ class OpenLibraryTableViewController: UITableViewController {
         }
             
     }
-    
-    
+        
     /**
            This function will delete a given Book from the persistent data model.
     */
@@ -287,4 +275,14 @@ class OpenLibraryTableViewController: UITableViewController {
         }
     }
 
+}
+
+extension OpenLibraryTableViewController: AddProtocolDelegate{
+    // Function in the delegate that adds books based on the protocol information.
+    func addBookToTable(book:Books){
+        let b = Books(name: book.name, authors: book.authors, image: book.image)
+        self.books.append(b)
+        self.saveBookToModel(book: b)
+        self.tableView.reloadData()
+    }
 }
