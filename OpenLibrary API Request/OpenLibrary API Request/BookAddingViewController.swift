@@ -229,7 +229,7 @@ class BookAddingViewController: UIViewController {
     
     @objc func dismissKeyboard(){
     //Causes the view to resign from the status of first responder.
-    view.endEditing(true)
+        view.endEditing(true)
     }
     
 
